@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import useAxios from './utils/interceptor';
+import useAxios from '../utils/interceptor';
 
 
 const AddTask = () => {

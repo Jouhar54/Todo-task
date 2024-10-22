@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import useAxios from './utils/interceptor';
+import useAxios from '../utils/interceptor';
 import axios from 'axios';
 
 const TodoList = () => {
@@ -16,7 +16,7 @@ const TodoList = () => {
   const fetchTodo = async () => {
     try {
       const response = await api.get(`/tasks/`);
-       setTodoItems(response.data);
+      setTodoItems(response.data);
       // console.log(response,'response');
     } catch (err) {
       console.log(err);
@@ -33,9 +33,9 @@ const TodoList = () => {
       const response = await api.put(`/tasks/${editingId}/`, {
         title: newText,
         description: newDescription,
-        isCompleted: false,
+        status: false,
       });
-      setTodoItems((prev) => 
+      setTodoItems((prev) =>
         prev.map(item => (item.id === editingId ? response.data : item))
       );
       toast.success("Edited Successfully");
@@ -47,10 +47,16 @@ const TodoList = () => {
     }
   };
 
-  const markCompleted = async (id, isCompleted) => {
+  const markCompleted = async (id, status) => {
     try {
-      const response = await api.put(`/tasks/${id}/`, { isCompleted: !isCompleted });
-      setTodoItems((prev) => 
+      const todoItem = todoItems.find((item) => item.id === id);
+
+      const response = await api.put(`/tasks/${id}/`, {
+        title: todoItem.title,
+        status: !status
+      });
+
+      setTodoItems((prev) =>
         prev.map(item => (item.id === id ? response.data : item))
       );
     } catch (error) {
@@ -61,6 +67,7 @@ const TodoList = () => {
       }
     }
   };
+
 
   const deleteTodo = async (id) => {
     try {
@@ -80,7 +87,7 @@ const TodoList = () => {
 
   const filteredTodoItems = todoItems.filter(todo => {
     if (filter === 'All') return true;
-    return filter === 'Completed' ? todo.isCompleted : !todo.isCompleted;
+    return filter === 'Completed' ? todo.status : !todo.status;
   });
 
   return (
@@ -109,14 +116,14 @@ const TodoList = () => {
           {filteredTodoItems.map((todo) => (
             <div
               key={todo.id}
-              className={`flex flex-col justify-between bg-white shadow-lg rounded-lg p-4 transition-all duration-200 ease-in-out ${todo.isCompleted ? 'bg-gray-200' : ''} h-56`}
+              className={`flex flex-col justify-between bg-white shadow-lg rounded-lg p-4 transition-all duration-200 ease-in-out ${todo.status ? 'bg-gray-200' : ''} h-56`}
             >
               <div>
                 <div className="items-end">
                   <input
                     type="checkbox"
-                    checked={todo.isCompleted}
-                    onChange={() => markCompleted(todo.id, todo.isCompleted)}
+                    checked={todo.status}
+                    onChange={() => markCompleted(todo.id, todo.status)}
                     className="mr-3 h-5 w-5"
                   />
                   {editingId === todo.id ? (
@@ -138,10 +145,10 @@ const TodoList = () => {
                     </form>
                   ) : (
                     <div className="text-center">
-                      <h2 className={`text-lg font-bold ${todo.isCompleted ? 'line-through text-gray-500' : ''}`}>
+                      <h2 className={`text-lg font-bold ${todo.status ? 'line-through text-gray-500' : ''}`}>
                         {todo.title}
                       </h2>
-                      <p className={`text-gray-700 font-semibold ${todo.isCompleted ? 'line-through text-gray-500' : ''}`}>
+                      <p className={`text-gray-700 font-semibold ${todo.status ? 'line-through text-gray-500' : ''}`}>
                         {todo.description}
                       </p>
                     </div>
@@ -199,7 +206,7 @@ const TodoList = () => {
             <h2 className="text-2xl font-bold mb-4">{selectedTodo.title}</h2>
             <p className="text-gray-700 mb-4">{selectedTodo.description}</p>
             <p className="text-gray-700 mb-4">
-              <strong>Status:</strong> {selectedTodo.isCompleted ? 'Completed' : 'Pending'}
+              <strong>Status:</strong> {selectedTodo.status ? 'Completed' : 'Pending'}
             </p>
             <button
               onClick={() => setSelectedTodo(null)}

@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { FaTimes, FaBars, FaTasks, FaPlus, FaUser, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'; // Use FaSignOutAlt for logout
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate for redirecting after logout
-import { AuthContext } from './context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

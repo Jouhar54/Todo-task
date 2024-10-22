@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { AuthContext } from './context/authContext';
+import { AuthContext } from '../context/authContext';
 
 
 const url_api = "http://82.180.145.66/api/v1";

@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import AddTask from './AddTask';
-import Profile from './Profile';
-import TodoList from './TodoList.jsx';
-import SignUp from './signup.jsx';
-import Login from './login.jsx';
+import AddTask from './TodoList/AddTask';
+import Profile from './TodoList/profile.jsx';
+import TodoList from './TodoList/TodoList.jsx';
+import SignUp from './SignupAndLogin/signup.jsx';
+import Login from './SignupAndLogin/login.jsx';
 import ProtectedRoute from './utils/protectRouter.jsx';
-import Layout from './Layout'; // Import the Layout component
+import Layout from './TodoList/layout.jsx'; // Import the Layout component
 
 const App = () => {
   return (
