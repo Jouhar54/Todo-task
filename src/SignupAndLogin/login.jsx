@@ -5,7 +5,7 @@ import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 
 
-const url_api = "https://82.180.145.66/api/v1";
+const url_api = "http://82.180.145.66/api/v1";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
