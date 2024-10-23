@@ -23,7 +23,6 @@ const Sidebar = () => {
 
   return (
     <div>
-      {/* Button to toggle sidebar in mobile view */}
       <button
         className="p-3 text-white bg-gray-800 fixed top-4 left-4 z-50 lg:hidden"
         onClick={toggleSidebar}
@@ -31,12 +30,10 @@ const Sidebar = () => {
         <FaBars />
       </button>
 
-      {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 h-full w-64 bg-gray-900 text-white transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
           } transition-transform duration-300 lg:translate-x-0 z-40`}
       >
-        {/* Sidebar header */}
         <div className="flex items-center justify-between p-4 bg-gray-800">
           <h2 className="text-xl font-bold">Task Manager</h2>
           <button className="lg:hidden text-white" onClick={closeSidebar}>
@@ -44,7 +41,6 @@ const Sidebar = () => {
           </button>
         </div>
 
-        {/* Sidebar Links */}
         <ul className="mt-4 space-y-4">
           <li className="px-4">
             <Link
@@ -99,7 +95,6 @@ const Sidebar = () => {
         </ul>
       </aside>
 
-      {/* Overlay when sidebar is open (for mobile view) */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 z-30 lg:hidden"

@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom'; // Added useNavigate for redirection after signup
-import axios from 'axios'; // Import axios for API requests
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const url_api = "http://82.180.145.66/api/v1";
 
 const SignUp = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const navigate = useNavigate(); // Hook to navigate after successful signup
+  const navigate = useNavigate();
 
   // Yup validation schema
   const SignUpSchema = Yup.object().shape({
@@ -33,17 +33,15 @@ const SignUp = () => {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      // Create an object that matches the structure required by your backend
       const formData = {
         first_name: values.firstName,
         last_name: values.lastName,
         email: values.email,
         username: values.username,
         password: values.password,
-        confirm_password:values.confirmPassword
+        confirm_password: values.confirmPassword
       };
 
-      // Send the form data to the backend API for registration
       const response = await axios.post(`${url_api}/register/`, formData);
       console.log(response);
       toast.success('Successfully signed up!');
@@ -53,9 +51,8 @@ const SignUp = () => {
     } catch (error) {
       console.error('Signup error:', error);
 
-      // Handle errors and show an error message
       if (error.response && error.response.data.message) {
-        toast.error(error.response.data.message); // Display error message from server
+        toast.error(error.response.data.message);
       } else {
         toast.error('Signup failed. Please try again.');
       }
@@ -96,7 +93,6 @@ const SignUp = () => {
                 </div>
               </div>
 
-              {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email
@@ -109,7 +105,6 @@ const SignUp = () => {
                 <ErrorMessage name="email" component="p" className="text-red-500 text-xs mt-1" />
               </div>
 
-              {/* Username Field */}
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700">
                   Username
@@ -122,7 +117,6 @@ const SignUp = () => {
                 <ErrorMessage name="username" component="p" className="text-red-500 text-xs mt-1" />
               </div>
 
-              {/* Password Fields Side by Side */}
               <div className="flex space-x-4">
                 <div className="flex-1">
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -149,14 +143,12 @@ const SignUp = () => {
                 </div>
               </div>
 
-              {/* Submit Button */}
               <div className="text-center">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full py-2 px-4 text-white rounded-md ${
-                    isSubmitting ? 'bg-blue-300' : 'bg-blue-600 hover:bg-blue-700'
-                  } transition-all duration-200`}
+                  className={`w-full py-2 px-4 text-white rounded-md ${isSubmitting ? 'bg-blue-300' : 'bg-blue-600 hover:bg-blue-700'
+                    } transition-all duration-200`}
                 >
                   {isSubmitting ? 'Submitting...' : 'Sign Up'}
                 </button>

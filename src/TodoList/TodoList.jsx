@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import useAxios from '../utils/interceptor';
-import axios from 'axios';
 
 const TodoList = () => {
   const [todoItems, setTodoItems] = useState([]);
   const [editingId, setEditingId] = useState('');
   const [newText, setNewText] = useState('');
   const [newDescription, setNewDescription] = useState('');
-  const [filter, setFilter] = useState('All'); // State for the filter
-  const [selectedTodo, setSelectedTodo] = useState(null); // State for the selected Todo for the modal
+  const [filter, setFilter] = useState('All');
+  const [selectedTodo, setSelectedTodo] = useState(null);
 
   const api = useAxios();
 
@@ -17,6 +16,16 @@ const TodoList = () => {
     try {
       const response = await api.get(`/tasks/`);
       setTodoItems(response.data);
+      // console.log(response,'response');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const viewTodo = async (id) => {
+    try {
+      const response = await api.get(`/tasks/${id}/`);
+      setSelectedTodo(response.data);
       // console.log(response,'response');
     } catch (err) {
       console.log(err);
@@ -72,7 +81,7 @@ const TodoList = () => {
   const deleteTodo = async (id) => {
     try {
       await api.delete(`/tasks/${id}/`);
-      setTodoItems((prev) => prev.filter(item => item.id !== id)); // Remove deleted item
+      setTodoItems((prev) => prev.filter(item => item.id !== id));
       toast.error("Deleted Successfully");
     } catch (error) {
       console.log(error);
@@ -108,7 +117,6 @@ const TodoList = () => {
         </select>
       </div>
 
-      {/* Check if filtered todoItems array is empty */}
       {filteredTodoItems.length === 0 ? (
         <p className="text-center text-gray-500 text-lg">You don't have any tasks</p>
       ) : (
@@ -148,7 +156,7 @@ const TodoList = () => {
                       <h2 className={`text-lg font-bold ${todo.status ? 'line-through text-gray-500' : ''}`}>
                         {todo.title}
                       </h2>
-                      <p className={`text-gray-700 font-semibold ${todo.status ? 'line-through text-gray-500' : ''}`}>
+                      <p className={`text-gray-700 font-semibold ${todo.status ? 'line-through text-gray-500' : ''} overflow-hidden text-ellipsis max-h-16`}>
                         {todo.description}
                       </p>
                     </div>
@@ -156,10 +164,9 @@ const TodoList = () => {
                 </div>
               </div>
 
-              {/* Center the buttons */}
               <div className="flex justify-center mt-4 space-x-2">
                 <button
-                  onClick={() => setSelectedTodo(todo)}
+                  onClick={() => viewTodo(todo.id)}
                   className="bg-green-500 text-white rounded-md p-2 hover:bg-green-600 transition-all duration-200 ease-in-out"
                 >
                   View
@@ -199,7 +206,6 @@ const TodoList = () => {
         </div>
       )}
 
-      {/* Modal for displaying selected todo details */}
       {selectedTodo && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white rounded-lg p-8 shadow-lg max-w-md w-full">

@@ -5,7 +5,7 @@ import TodoList from './TodoList/TodoList.jsx';
 import SignUp from './SignupAndLogin/signup.jsx';
 import Login from './SignupAndLogin/login.jsx';
 import ProtectedRoute from './utils/protectRouter.jsx';
-import Layout from './TodoList/layout.jsx'; // Import the Layout component
+import Layout from './TodoList/layout.jsx'; 
 
 const App = () => {
   return (

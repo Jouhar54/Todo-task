@@ -10,7 +10,7 @@ const useAxios = () => {
   const authTokens=JSON.parse(localStorage.getItem('authTokens'))
  
   // console.log('token',authTokens.access)
-  const {  setUser, setAuthTokens, logoutUser } = useContext(AuthContext); // Added logoutUser for handling token expiration
+  const {  setUser, setAuthTokens, logoutUser } = useContext(AuthContext);
 
   const authAxios = axios.create({
     baseURL,

@@ -4,12 +4,12 @@ import useAxios from '../utils/interceptor';
 
 
 const Profile = () => {
-  const [profile, setProfile] = useState(null); // Initialize as null for better checking
+  const [profile, setProfile] = useState(null);
   const api = useAxios()
 
   const fetchProfile = async () => {
     try {
-      const response = await api.get(`/profile`);
+      const response = await api.get(`/profile/`);
       setProfile(response.data);
     } catch (err) {
       console.log(err);
@@ -20,7 +20,6 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
-  // Return loading state while fetching profile
   if (!profile) {
     return <div className="text-center text-gray-600 mt-10">Loading...</div>;
   }
